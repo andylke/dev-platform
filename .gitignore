@@ -1,0 +1,16 @@
+# IDE
+.vscode/
+
+# Logs
+*.log
+
+# Temporary files
+.tmp
+
+# Runtime
+**/runtime/
+
+# Certificates
+**/certificates
+**/ca-certificates
+
