@@ -12,7 +12,7 @@ CA_CERT_DIR="${SHARE_DIR}/ca-certificates"
 CA_CRT_FILE="${CA_CERT_DIR}/ca.crt"
 CA_KEY_FILE="${CA_CERT_DIR}/ca.key"
 
-generate_ca_cert() {
+prepare_ca_cert() {
 
     local ca_index_file="${CA_CERT_DIR}/index.txt"
     local ca_serial_file="${CA_CERT_DIR}/serial"
@@ -71,7 +71,7 @@ EOF
 
 }
 
-generate_truststore() {
+prepare_truststore() {
 
     local truststore_file="${CA_CERT_DIR}/truststore.p12"
 
@@ -89,7 +89,7 @@ generate_truststore() {
 
 }
 
-generate_server_cert() {
+prepare_server_cert() {
 
     local service=$1
     local subdomain=$2
@@ -99,7 +99,7 @@ generate_server_cert() {
     local domain="${subdomain}.${ROOT_DOMAIN}"
 
     echo
-    echo "# Generating cert for ${service}"
+    echo "# Preparing cert for ${service}"
 
     mkdir -p "$service_cert_dir"
 
@@ -149,17 +149,17 @@ EOF
         "$ext_file"
 }
 
-call_generate_keystore_script() {
+call_custom_script() {
 
     local service=$1
     local subdomain=$2
     local service_dir=$3
 
-    local script="${service_dir}/generate-keystore.sh"
+    local script="${service_dir}/prepare-cert.sh"
     if [[ -f "$script" ]]; then
 
         echo
-        echo "# Generate Keystore for ${service}"
+        echo "# Calling ${script}"
 
         "${script}"
 
@@ -167,7 +167,7 @@ call_generate_keystore_script() {
 
 }
 
-generate_cert() {
+prepare_cert() {
 
     local service=$1
     local subdomain=$2
@@ -175,20 +175,20 @@ generate_cert() {
     local service_dir="${ROOT_DIR}/${service}"
     local service_cert_dir="${service_dir}/certificates"
 
-    generate_server_cert "${service}" "${subdomain}" "${service_dir}" "${service_cert_dir}"
-    call_generate_keystore_script "${service}" "${subdomain}" "${service_dir}"
+    prepare_server_cert "${service}" "${subdomain}" "${service_dir}" "${service_cert_dir}"
+    call_custom_script "${service}" "${subdomain}" "${service_dir}"
 
     tree -pug "${service_cert_dir}"
 
 }
 
-generate_ca_cert
-generate_truststore
+prepare_ca_cert
+prepare_truststore
 tree -pug "$CA_CERT_DIR"
 
-foreach_service generate_cert "$@"
+foreach_service prepare_cert "$@"
 
 echo
-echo "Generate cert for all services completed."
+echo "Prepare cert for all services completed."
 
 

@@ -67,7 +67,7 @@ max_connections=100
 
 shared_buffers=512MB
 
-timezone='Asia/Kuala_Lumpur'
+timezone='${TZ}'
 
 logging_collector=on
 log_directory='log'

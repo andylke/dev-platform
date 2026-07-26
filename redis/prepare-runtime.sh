@@ -22,7 +22,7 @@ tls-port ${REDIS_PORT}
 
 tls-cert-file /certificates/redis.crt
 tls-key-file /certificates/redis.key
-tls-ca-cert-file /ca/ca.crt
+tls-ca-cert-file /ca-certificates/ca.crt
 
 tls-auth-clients no
 

@@ -1,0 +1,16 @@
+name: dev-platform
+
+networks:
+
+  frontend:
+    name: dev-platform-frontend
+    driver: bridge
+
+  backend:
+    name: dev-platform-backend
+    driver: bridge
+
+  tools:
+    name: dev-platform-tools
+    driver: bridge
+
