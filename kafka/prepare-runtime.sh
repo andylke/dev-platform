@@ -43,15 +43,17 @@ sasl.enabled.mechanisms=SCRAM-SHA-512
 sasl.mechanism.inter.broker.protocol=SCRAM-SHA-512
 sasl.mechanism.controller.protocol=SCRAM-SHA-512
 
-listener.name.broker.sasl.enabled.mechanisms=SCRAM-SHA-512
+listener.name.internal.sasl.enabled.mechanisms=SCRAM-SHA-512
+listener.name.external.sasl.enabled.mechanisms=SCRAM-SHA-512
 listener.name.controller.sasl.enabled.mechanisms=SCRAM-SHA-512
 
-# Broker JAAS
-listener.name.broker.scram-sha-512.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+# JAAS
+listener.name.internal.scram-sha-512.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
     username="${KAFKA_ADMIN_USERNAME}" \
     password="${KAFKA_ADMIN_PASSWORD}";
-
-# Controller JAAS
+listener.name.external.scram-sha-512.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+    username="${KAFKA_ADMIN_USERNAME}" \
+    password="${KAFKA_ADMIN_PASSWORD}";
 listener.name.controller.scram-sha-512.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
     username="${KAFKA_ADMIN_USERNAME}" \
     password="${KAFKA_ADMIN_PASSWORD}";
