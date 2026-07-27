@@ -18,17 +18,17 @@ generate_config_files() {
     tls /certificates/caddy.crt /certificates/caddy.key
 }
 
-${JENKINS_URL} {
+${JENKINS_DOMAIN} {
     import dev_tls
     reverse_proxy jenkins:8080
 }
 
-${MAILPIT_URL} {
+${MAILPIT_DOMAIN} {
     import dev_tls
     reverse_proxy mailpit:8025
 }
 
-${GRAFANA_URL} {
+${GRAFANA_DOMAIN} {
     import dev_tls
     reverse_proxy grafana:3000
 }

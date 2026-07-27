@@ -17,8 +17,7 @@ prepare_dir() {
     echo "# Preparing runtime dir for ${service}"
 
     mkdir -p \
-      "${runtime_dir}/volumes" \
-      "${runtime_dir}/config"
+      "${runtime_dir}/volumes"
 
 }
 
