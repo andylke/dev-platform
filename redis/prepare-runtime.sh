@@ -26,11 +26,17 @@ tls-ca-cert-file /ca-certificates/ca.crt
 
 tls-auth-clients no
 
+aclfile /usr/local/etc/redis/users.acl
+
 dir /data
 
 appendonly yes
 EOF
 
+    cat > "${CONFIG_DIR}/users.acl" <<EOF
+user default off
+user ${REDIS_ADMIN_USERNAME} on >${REDIS_ADMIN_PASSWORD} ~* +@all
+EOF
 }
 
 generate_config_files

@@ -13,25 +13,12 @@ generate_config_files() {
 
     mkdir -p "${CONFIG_DIR}"
 
-    cat > "${CONFIG_DIR}/Caddyfile" <<EOF
-(dev_tls) {
-    tls /certificates/caddy.crt /certificates/caddy.key
-}
+    cat > "${CONFIG_DIR}/smtp-auth.txt" <<EOF
+${MAILPIT_ADMIN_USERNAME}:${MAILPIT_ADMIN_PASSWORD}
+EOF
 
-${JENKINS_URL} {
-    import dev_tls
-    reverse_proxy jenkins:8080
-}
-
-${MAILPIT_URL} {
-    import dev_tls
-    reverse_proxy mailpit:8025
-}
-
-${GRAFANA_URL} {
-    import dev_tls
-    reverse_proxy grafana:3000
-}
+    cat > "${CONFIG_DIR}/ui-auth.txt" <<EOF
+${MAILPIT_ADMIN_USERNAME}:${MAILPIT_ADMIN_PASSWORD}
 EOF
 
 }

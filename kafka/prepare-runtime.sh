@@ -118,8 +118,7 @@ format_kraft_storage() {
         /opt/kafka/bin/kafka-storage.sh format \
         --cluster-id "${KAFKA_CLUSTER_ID}" \
         --config /config/server.properties \
-        --add-scram "SCRAM-SHA-512=[name=${KAFKA_ADMIN_USERNAME},password=${KAFKA_ADMIN_PASSWORD}]" \
-        --add-scram "SCRAM-SHA-512=[name=${KAFKA_DEV_USERNAME},password=${KAFKA_DEV_PASSWORD}]"
+        --add-scram "SCRAM-SHA-512=[name=${KAFKA_ADMIN_USERNAME},password=${KAFKA_ADMIN_PASSWORD}]"
 
 }
 
