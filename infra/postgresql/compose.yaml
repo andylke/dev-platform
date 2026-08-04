@@ -1,0 +1,30 @@
+services:
+
+  postgresql:
+
+    image: postgres:${POSTGRESQL_VERSION}
+    container_name: postgresql
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_ADMIN_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRESQL_ADMIN_PASSWORD}
+      POSTGRES_DB: ${POSTGRESQL_DB}
+
+    ports:
+      - "${POSTGRESQL_PORT}:5432"
+
+    networks:
+      - backend
+      - tools
+
+    volumes:
+      - ./infra/postgresql/runtime/certificates:/certificates:ro
+      - ./infra/postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./infra/postgresql/config/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./infra/postgresql/runtime/volumes:/var/lib/postgresql
+
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c hba_file=/etc/postgresql/pg_hba.conf

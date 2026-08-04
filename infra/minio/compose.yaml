@@ -1,0 +1,24 @@
+services:
+
+  minio:
+    image: minio/minio:${MINIO_VERSION}
+    container_name: minio
+    hostname: minio
+    restart: unless-stopped
+
+    networks:
+      - backend
+      - tools
+
+    command:
+      - server
+      - /data
+      - --console-address
+      - ":9001"
+
+    volumes:
+      - ./minio/runtime/volumes/data:/data
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}

@@ -1,0 +1,19 @@
+services:
+  prometheus:
+    image: prom/prometheus:${PROMETHEUS_VERSION}
+    container_name: prometheus
+    hostname: prometheus
+    restart: unless-stopped
+
+    networks:
+      - backend
+      - tools
+
+    volumes:
+      - ./observability/prometheus/config/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - ./observability/prometheus/runtime/volumes/data:/prometheus
+
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle

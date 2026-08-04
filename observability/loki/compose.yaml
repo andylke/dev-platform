@@ -1,0 +1,17 @@
+services:
+  loki:
+    image: grafana/loki:${LOKI_VERSION}
+    container_name: loki
+    hostname: loki
+    restart: unless-stopped
+
+    networks:
+      - backend
+      - tools
+
+    volumes:
+      - ./observability/loki/config/loki.yaml:/etc/loki/loki.yaml:ro
+      - ./observability/loki/runtime/volumes/data:/loki
+
+    command:
+      - -config.file=/etc/loki/loki.yaml

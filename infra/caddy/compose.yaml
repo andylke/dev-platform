@@ -1,0 +1,22 @@
+services:
+  caddy:
+    image: caddy:${CADDY_VERSION}
+    container_name: caddy
+    hostname: caddy
+    restart: unless-stopped
+
+    ports:
+      - "443:443"
+
+    networks:
+      - backend
+      - tools
+
+    env_file:
+      - ./.env
+
+    volumes:
+      - ./shared/ca-certificates:/ca-certificates:ro
+      - ./infra/caddy/certificates:/certificates:ro
+      - ./infra/caddy/config/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./infra/caddy/runtime/data:/data

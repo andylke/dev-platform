@@ -1,0 +1,23 @@
+services:
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    container_name: redis
+    restart: unless-stopped
+
+    ports:
+      - "${REDIS_PORT}:6379"
+
+    networks:
+      - backend
+      - tools
+
+    volumes:
+      - ./shared/ca-certificates:/ca-certificates:ro
+      - ./infra/redis/certificates:/certificates:ro
+      - ./infra/redis/runtime/config:/usr/local/etc/redis:ro
+      - ./infra/redis/runtime/volumes/data:/data
+
+    command:
+      - redis-server
+      - /usr/local/etc/redis/redis.conf
