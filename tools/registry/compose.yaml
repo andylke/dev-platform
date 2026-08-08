@@ -1,0 +1,22 @@
+services:
+
+  registry:
+    image: registry:${REGISTRY_VERSION}
+    container_name: registry
+    hostname: registry
+    restart: unless-stopped
+
+    networks:
+      - backend
+      - tools
+
+    volumes:
+      - ./tools/registry/config/config.yaml:/etc/distribution/config.yaml:ro
+      - ./tools/registry/runtime/auth:/auth:ro
+      - ./tools/registry/runtime/volumes/data:/var/lib/registry
+
+    environment:
+      REGISTRY_HTTP_ADDR: 0.0.0.0:5000
+
+    command:
+      - /etc/distribution/config.yaml
