@@ -2,14 +2,9 @@
     tls /certificates/caddy.crt /certificates/caddy.key
 }
 
-{$MINIO_DOMAIN} {
+{$SEAWEEDFS_S3_DOMAIN} {
     import dev_tls
-    reverse_proxy minio:9000
-}
-
-{$MINIO_CONSOLE_DOMAIN} {
-    import dev_tls
-    reverse_proxy minio:9001
+    reverse_proxy seaweedfs:8333
 }
 
 {$MAILPIT_DOMAIN} {
