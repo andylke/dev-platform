@@ -17,6 +17,11 @@
     reverse_proxy mailpit:8025
 }
 
+{$VAULT_DOMAIN} {
+    import dev_tls
+    reverse_proxy vault:8200
+}
+
 {$JENKINS_DOMAIN} {
     import dev_tls
     reverse_proxy jenkins:8080

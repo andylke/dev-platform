@@ -18,9 +18,16 @@ build_compose_args() {
     result=(-f "${root_compose_file}")
 
     local group_list=("$@")
-    local group
+    local group_selector
 
-    for group in "${group_list[@]}"; do
+    for group_selector in "${group_list[@]}"; do
+
+        local group="${group_selector%%/*}"
+        local service_selector=""
+
+        if [[ "$group_selector" == */* ]]; then
+            service_selector="${group_selector#*/}"
+        fi
 
         local group_dir="${ROOT_DIR}/${group}"
         local conf_file="${group_dir}/services.conf"
@@ -40,6 +47,10 @@ build_compose_args() {
 
             local service
             read -r service _ <<< "$entry"
+
+            if [[ -n "$service_selector" && "$service" != "$service_selector" ]]; then
+                continue
+            fi
 
             local compose_file="${group_dir}/${service}/compose.yaml"
             if [[ -f "${compose_file}" ]]; then

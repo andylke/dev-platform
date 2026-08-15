@@ -24,7 +24,7 @@ prepare_service() {
 declare -a compose_args
 build_compose_args compose_args "$@"
 
-docker compose "${compose_args[@]}" up -d
+docker compose "${compose_args[@]}" restart
 
 sleep 5
 

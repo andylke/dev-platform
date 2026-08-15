@@ -1,0 +1,16 @@
+services:
+
+  vault:
+    image: hashicorp/vault:${VAULT_VERSION}
+    container_name: vault
+    command: vault server -config=/vault/config/vault.hcl
+    restart: unless-stopped
+
+    networks:
+      - backend
+      - tools
+
+    volumes:
+      - ./infra/vault/config/vault.hcl:/vault/config/vault.hcl:ro
+      - ./infra/vault/runtime/volumes/data:/vault/data
+

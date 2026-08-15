@@ -12,10 +12,16 @@ foreach_service() {
         exit 1
     }
 
-    local group_list="$@"
-    local group
+    local group_list=("$@")
+    local group_selector
 
-    for group in "${group_list[@]}"; do
+    for group_selector in "${group_list[@]}"; do
+
+        local group="${group_selector%%/*}"
+        local service_selector=""
+        if [[ "$group_selector" == */* ]]; then
+            service_selector="${group_selector#*/}"
+        fi
 
         local group_dir="${ROOT_DIR}/${group}"
         local conf_file="${group_dir}/services.conf"
@@ -36,6 +42,10 @@ foreach_service() {
 
             local service subdomain
             read -r service subdomain <<< "$entry"
+
+            if [[ -n "$service_selector" && "$service" != "$service_selector" ]]; then
+                continue
+            fi
 
             local service_dir="${group_dir}/${service}"
             "$callback" "$service_dir" "$service" "$subdomain"

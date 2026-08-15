@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
+trap 'rc=$?; echo "ERROR: ${BASH_SOURCE[0]}:${LINENO}: ${BASH_COMMAND} (exit ${rc})" >&2' ERR
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 SHARE_DIR="$(cd "$(dirname "$0")" && pwd)"

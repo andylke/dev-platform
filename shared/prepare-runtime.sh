@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
+trap 'rc=$?; echo "ERROR: ${BASH_SOURCE[0]}:${LINENO}: ${BASH_COMMAND} (exit ${rc})" >&2' ERR
 
 SHARED_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "${SHARED_DIR}/set-env.sh"
@@ -24,7 +25,9 @@ prepare_runtime() {
         "${script}"
     fi
 
-    tree -pug "${runtime_dir}"
+    if ! tree -pug "${runtime_dir}"; then
+        echo "WARNING: Unable to display runtime directory: ${runtime_dir}" >&2
+    fi
 
 }
 
