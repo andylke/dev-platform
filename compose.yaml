@@ -3,14 +3,14 @@ name: dev-platform
 networks:
 
   frontend:
-    name: dev-platform-frontend
+    name: ${FRONTEND_NETWORK}
     driver: bridge
 
   backend:
-    name: dev-platform-backend
-    driver: bridge
+    name: ${BACKEND_NETWORK}
+    external: true
 
   tools:
-    name: dev-platform-tools
+    name: ${TOOLS_NETWORK}
     driver: bridge
 

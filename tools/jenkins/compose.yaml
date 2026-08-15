@@ -8,8 +8,8 @@ services:
     user: root
 
     networks:
-      - backend
       - tools
+      - backend
 
     volumes:
       - ./tools/jenkins/runtime/home:/var/jenkins_home

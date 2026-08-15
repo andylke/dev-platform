@@ -8,7 +8,6 @@ services:
 
     networks:
       - backend
-      - tools
 
     volumes:
       - ./infra/vault/config/vault.hcl:/vault/config/vault.hcl:ro

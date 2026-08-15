@@ -16,7 +16,6 @@ services:
 
     networks:
       - backend
-      - tools
 
     volumes:
       - ./infra/postgresql/runtime/certificates:/certificates:ro

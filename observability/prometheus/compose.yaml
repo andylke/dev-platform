@@ -6,7 +6,6 @@ services:
     restart: unless-stopped
 
     networks:
-      - backend
       - tools
 
     volumes:
